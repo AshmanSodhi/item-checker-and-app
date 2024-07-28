@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.ashmansodhi.chotubol.ui.theme.ChotuBolTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +22,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChotuBolTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize()) {
+                    Greeting()
                 }
             }
         }
@@ -31,17 +31,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun Greeting() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "firstscreen" ) {
+        composable("firstscreen"){
+            ScanScreen {
+                navController.navigate("itemlist")
+            }
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChotuBolTheme {
-        Greeting("Android")
-    }
-}
+        composable("itemlist"){
+            ItemList{navController.navigate("finalScreen")}
+
+        }
+        composable("finalScreen"){
+            TextReading{navController.navigate("firstscreen")}
+
+        }
+}}

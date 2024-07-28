@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ScanScreen(){
+fun ScanScreen(navigationToSecondScreen : () -> Unit){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +35,7 @@ fun ScanScreen(){
         )
         Spacer(modifier = Modifier.height(100.dp))
 
-        Button(onClick = {},
+        Button(onClick = {navigationToSecondScreen()},
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             modifier = Modifier.height(100.dp).width(200.dp)
             ){
@@ -47,5 +47,5 @@ fun ScanScreen(){
 @Preview(showBackground = true)
 @Composable
 fun ScanTest(){
-    ScanScreen()
+    ScanScreen({})
 }
